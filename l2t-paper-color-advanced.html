@@ -1,6 +1,29 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-slider/paper-slider.html">
 
+<!--
+l2t-paper-color-advanced uses `paper-slider`'s to set RGB values
+Example:
+
+    <l2t-paper-color-advanced></l2t-paper-color-advanced>
+    <l2t-paper-color-radio color="#00bcd4"></l2t-paper-color-radio>
+
+### Styling
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--l2t-paper-color-advanced-prev-height` | Height of the preview panel | `200px`
+`--l2t-paper-color-advanced-prev-width` | Width of the preview panel | `200px`
+`--l2t-paper-color-advanced-red` | Color to be used for red slider | `--paper-red-700`
+`--l2t-paper-color-advanced-green` | Color to be used for green slider | `--paper-green-700`
+`--l2t-paper-color-advanced-blue` | Color to be used for blue slider | `--paper-blue-700`
+
+@group l2t Paper Elements
+@element l2t-paper-color-advanced
+@demo demo/index.html
+-->
+
 <dom-module id="l2t-paper-color-advanced">
   <template>
     <style>
@@ -10,29 +33,31 @@
       .container {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
         justify-content: center;
       }
       .preview {
-        height: 84px;
-        min-width: 168px;
-        max-width: 200px;
-        width: 100%;
+        height: var(--l2t-paper-color-advanced-prev-height, 200px);
+        width: var(--l2t-paper-color-advanced-prev-width, 200px);
+      }
+      .sliders {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
       }
       .red {
-        --paper-slider-active-color: var(--paper-red-700);
-        --paper-slider-knob-color: var(--paper-red-700);
-        --paper-slider-pin-color: var(--paper-red-700);
+        --paper-slider-active-color: var(--l2t-paper-color-advanced-red, var(--paper-red-700));
+        --paper-slider-knob-color: var(--l2t-paper-color-advanced-red, var(--paper-red-700));
+        --paper-slider-pin-color: var(--l2t-paper-color-advanced-red, var(--paper-red-700));
       }
       .green {
-        --paper-slider-active-color: var(--paper-green-700);
-        --paper-slider-knob-color: var(--paper-green-700);
-        --paper-slider-pin-color: var(--paper-green-700);
+        --paper-slider-active-color: var(--l2t-paper-color-advanced-green, var(--paper-green-700));
+        --paper-slider-knob-color: var(--l2t-paper-color-advanced-green, var(--paper-green-700));
+        --paper-slider-pin-color: var(--l2t-paper-color-advanced-green, var(--paper-green-700));
       }
       .blue {
-        --paper-slider-active-color: var(--paper-blue-700);
-        --paper-slider-knob-color: var(--paper-blue-700);
-        --paper-slider-pin-color: var(--paper-blue-700);
+        --paper-slider-active-color: var(--l2t-paper-color-advanced-blue, var(--paper-blue-700));
+        --paper-slider-knob-color: var(--l2t-paper-color-advanced-blue, var(--paper-blue-700));
+        --paper-slider-pin-color: var(--l2t-paper-color-advanced-blue, var(--paper-blue-700));
       }
     </style>
     <div class="container">
@@ -64,29 +89,47 @@
       static get is() { return 'l2t-paper-color-advanced'; }
       static get properties() {
         return {
+          /**
+          * color: string to store hex color value
+          */
           color: {
             type: String,
             value: '#3f51b5'
           },
+          /**
+          * rgbColor: string to store RGB color value
+          */
           rgbColor: {
             type: String,
             computed: '_rgbFromColor(color)',
             observer: '_rgbToSliders'
           },
+          /**
+          * redVal: number to store red color value
+          */
           redVal: {
             type: Number,
             observer: '_colorChanged'
           },
+          /**
+          * greenVal: number to store green color value
+          */
           greenVal: {
             type: Number,
             observer: '_colorChanged'
           },
+          /**
+          * blueVal: number to store blue color value
+          */
           blueVal: {
             type: Number,
             observer: '_colorChanged'
           }
         };
       }
+      /**
+      * _colorChanged: updates color when sliders move
+      */
       _colorChanged() {
         if(this.redVal === '' || this.greenVal === '' || this.blueVal === '')
           return
@@ -100,11 +143,17 @@
 
         this.color = "#"+r+g+b;
       }
+      /**
+      * _rgbFromColor(color): updates rgbColor based on color
+      */
       _rgbFromColor(color) {
         var convertColor = document.createElement("div");
         convertColor.style.color = color;
         return convertColor.style.color;
       }
+      /**
+      * _rgbToSliders: splits rgbColor into numeric values
+      */
       _rgbToSliders() {
         var split = this.rgbColor.slice(this.rgbColor.indexOf('(') + 1, this.rgbColor.indexOf(')'));
         var splitArr = split.split(',');
