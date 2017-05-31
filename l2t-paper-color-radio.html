@@ -6,10 +6,10 @@
 
 <!--
 Material design: [Radio button](https://www.google.com/design/spec/components/selection-controls.html#selection-controls-radio-button)
-`paper-radio-button` is a button that can be either checked or unchecked.
+`l2t-paper-color-radio` is a button that can be either checked or unchecked.
 User can tap the radio button to check or uncheck it.
 
-Use a `<l2t-paper-color-radio>` to group a set of radio buttons.  When radio buttons
+Use a `<paper-radio-group>` to group a set of radio buttons.  When radio buttons
 are inside a radio group, exactly one radio button in the group can be checked
 at any time.
 
@@ -17,7 +17,7 @@ Example:
 
     <l2t-paper-color-radio></l2t-paper-color-radio>
     <l2t-paper-color-radio>Item label</l2t-paper-color-radio>
-
+    
 ### Styling
 The following custom properties and mixins are available for styling:
 
@@ -33,10 +33,8 @@ Custom property | Description | Default
 `--l2t-paper-color-radio-container` | A mixin applied to the internal radio container | `{}`
 `--l2t-paper-color-radio-label` | A mixin applied to the internal label | `{}`
 `--l2t-paper-color-radio-label-checked` | A mixin applied to the internal label when the radio button is checked | `{}`
-
 This element applies the mixin `--paper-font-common-base` but does not import `paper-styles/typography.html`.
 In order to apply the `Roboto` font to this element, make sure you've imported `paper-styles/typography.html`.
-
 @group l2t Paper Elements
 @element l2t-paper-color-radio
 @demo demo/index.html
