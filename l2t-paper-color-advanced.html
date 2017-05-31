@@ -38,16 +38,22 @@
     <div class="container">
       <div style="background:[[color]];" class="preview"></div>
       <div class="sliders">
-        <paper-slider pin min="0" max="255" value="{{redVal}}" class="red"></paper-slider>
-        <paper-slider pin min="0" max="255" value="{{greenVal}}" class="green"></paper-slider>
-        <paper-slider pin min="0" max="255" value="{{blueVal}}" class="blue"></paper-slider>
+        <paper-slider pin min="0" max="255"
+          immediate-value="{{redVal}}" value="[[redVal]]" class="red">
+        </paper-slider>
+        <paper-slider pin min="0" max="255"
+          immediate-value="{{greenVal}}" value="[[greenVal]]" class="green">
+        </paper-slider>
+        <paper-slider pin min="0" max="255"
+          immediate-value="{{blueVal}}" value="[[blueVal]]" class="blue">
+        </paper-slider>
       </div>
     </div>
   </template>
 
   <script>
     /**
-     * `l2t-paper-color-advanced`
+     * `l2t-paper-color`
      * Dialogue box in a paper style for selecting colors
      *
      * @customElement
@@ -82,12 +88,15 @@
         };
       }
       _colorChanged() {
-        if(this.redVal == '' || this.greenVal == '' || this.blueVal == '')
+        if(this.redVal === '' || this.greenVal === '' || this.blueVal === '')
           return
 
         var r = this.redVal.toString(16);
+        r=r.length<2?"0"+r:r;
         var g = this.greenVal.toString(16);
+        g=g.length<2?"0"+g:g;
         var b = this.blueVal.toString(16);
+        b=b.length<2?"0"+b:b;
 
         this.color = "#"+r+g+b;
       }
