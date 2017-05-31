@@ -1,0 +1,110 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-slider/paper-slider.html">
+
+<dom-module id="l2t-paper-color-advanced">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+      .preview {
+        height: 84px;
+        min-width: 168px;
+        max-width: 200px;
+        width: 100%;
+      }
+      .red {
+        --paper-slider-active-color: var(--paper-red-700);
+        --paper-slider-knob-color: var(--paper-red-700);
+        --paper-slider-pin-color: var(--paper-red-700);
+      }
+      .green {
+        --paper-slider-active-color: var(--paper-green-700);
+        --paper-slider-knob-color: var(--paper-green-700);
+        --paper-slider-pin-color: var(--paper-green-700);
+      }
+      .blue {
+        --paper-slider-active-color: var(--paper-blue-700);
+        --paper-slider-knob-color: var(--paper-blue-700);
+        --paper-slider-pin-color: var(--paper-blue-700);
+      }
+    </style>
+    <div class="container">
+      <div style="background:[[color]];" class="preview"></div>
+      <div class="sliders">
+        <paper-slider pin min="0" max="255" value="{{redVal}}" class="red"></paper-slider>
+        <paper-slider pin min="0" max="255" value="{{greenVal}}" class="green"></paper-slider>
+        <paper-slider pin min="0" max="255" value="{{blueVal}}" class="blue"></paper-slider>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `l2t-paper-color`
+     * Dialogue box in a paper style for selecting colors
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class L2tPaperColorAdvanced extends Polymer.Element {
+      static get is() { return 'l2t-paper-color-advanced'; }
+      static get properties() {
+        return {
+          color: {
+            type: String,
+            value: '#3f51b5'
+          },
+          rgbColor: {
+            type: String,
+            computed: '_rgbFromColor(color)',
+            observer: '_rgbToSliders'
+          },
+          redVal: {
+            type: Number,
+            observer: '_colorChanged'
+          },
+          greenVal: {
+            type: Number,
+            observer: '_colorChanged'
+          },
+          blueVal: {
+            type: Number,
+            observer: '_colorChanged'
+          }
+        };
+      }
+      _colorChanged() {
+        if(this.redVal == '' || this.greenVal == '' || this.blueVal == '')
+          return
+
+        var r = this.redVal.toString(16);
+        var g = this.greenVal.toString(16);
+        var b = this.blueVal.toString(16);
+
+        this.color = "#"+r+g+b;
+      }
+      _rgbFromColor(color) {
+        var convertColor = document.createElement("div");
+        convertColor.style.color = color;
+        return convertColor.style.color;
+      }
+      _rgbToSliders() {
+        var split = this.rgbColor.slice(this.rgbColor.indexOf('(') + 1, this.rgbColor.indexOf(')'));
+        var splitArr = split.split(',');
+        this.redVal = parseInt(splitArr[0]);
+        this.greenVal = parseInt(splitArr[1]);
+        this.blueVal = parseInt(splitArr[2]);
+      }
+    }
+
+    window.customElements.define(L2tPaperColorAdvanced.is, L2tPaperColorAdvanced);
+  </script>
+</dom-module>
