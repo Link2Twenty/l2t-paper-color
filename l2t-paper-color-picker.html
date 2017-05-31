@@ -3,12 +3,30 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="l2t-paper-color-radio.html">
 
+<!--
+l2t-paper-color-picker uses `dom-repeat` and `paper-radio-group` to display an arroy of color options
+Example:
+
+    <l2t-paper-color-picker></l2t-paper-color-picker>
+    
+### Styling
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--l2t-paper-color-picker-padding` | padding between each radio button | `6px`
+
+@group l2t Paper Elements
+@element l2t-paper-color-picker
+@demo demo/index.html
+-->
+
 <dom-module id="l2t-paper-color-picker">
   <template>
     <style>
       :host {
         display: block;
-        --paper-radio-group-item-padding: 6px;
+        --paper-radio-group-item-padding: var(--l2t-paper-color-picker-padding, 6px);
       }
       .grid {
         display: inline-flex;
@@ -25,18 +43,13 @@
   </template>
 
   <script>
-    /**
-     * `l2t-paper-color-picker`
-     * paper style color picker
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
     class L2tPaperColorPicker extends Polymer.Element {
       static get is() { return 'l2t-paper-color-picker'; }
       static get properties() {
         return {
+          /**
+          * colors: array to store color values
+          */
           colors: {
             type: Array,
             value: ['#db4437','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#03a9f4','#00bcd4','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#ffc107','#ff9800','#ff5722','#795548','#607d8b']
