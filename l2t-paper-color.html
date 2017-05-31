@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="l2t-paper-color-dialog.html">
+
+<dom-module id="l2t-paper-color">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+
+  <script>
+    /**
+     * `l2t-paper-color`
+     * Dialogue box in a paper style for selecting colors
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class L2tPaperColor extends Polymer.Element {
+      static get is() { return 'l2t-paper-color'; }
+      static get properties() {
+        return {
+
+        };
+      }
+    }
+
+    window.customElements.define(L2tPaperColor.is, L2tPaperColor);
+  </script>
+</dom-module>
