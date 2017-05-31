@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "description": "Dialogue box in a paper style for selecting colors",
   "main": "l2t-paper-color.html",
+  "license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
