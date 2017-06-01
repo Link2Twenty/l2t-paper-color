@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="l2t-paper-color-picker.html">
 <link rel="import" href="l2t-paper-color-advanced.html">
 
@@ -8,23 +9,31 @@
     <style>
       :host {
         display: block;
+        --l2t-paper-color-advanced-prev-width: 211px;
+        --l2t-paper-color-advanced-prev-height: 211px;
+      }
+      paper-dialog {
+        padding: 0 12px;
+        background-color: var(--l2t-paper-color-dialog, var(--light-theme-background-color));
       }
       .container {
         max-width: var(--l2t-paper-color-dialog-max-width, 430px);
         min-width: var(--l2t-paper-color-dialog-min-width, 200px);
-        width: 100%;
+        max-height: var(--l2t-paper-color-dialog-max-height, 430px);
+        min-height: var(--l2t-paper-color-dialog-min-height, 200px);
+        padding: 0;
+        margin: 0;
       }
       .container .section-wrapper {
         display: flex;
         justify-content: center;
         position: relative;
-        overflow: scroll;
-        max-height: var(--l2t-paper-color-dialog-max-height, 430px);
-        min-height: var(--l2t-paper-color-dialog-min-height, 200px);
-        height: 100%; 
+        overflow: auto;
+        height: 100%;
+        width: 100%;
+        padding-top: 12px;
       }
       .container section{
-        background-color: var(--l2t-paper-color-dialog, var(--light-theme-background-color));
         opacity: 0;
         pointer-events: none;
         will-change: opacity;
@@ -45,22 +54,25 @@
         flex-grow: 1;
       }
     </style>
-    <div class="container">
-      <div class="section-wrapper">
-        <section active class="picker">
-          <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
-        </section>
-        <section class="advanced">
-          <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
-        </section>
+    <paper-dialog modal>
+      <div class="container">
+        <div class="section-wrapper">
+          <section active class="picker">
+            <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
+          </section>
+          <section class="advanced">
+            <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
+          </section>
+        </div>
+        <div class="button-tray">
+          <paper-button data-push="false" dialog-dismiss on-tap='_dialogClosed' class="dismiss-button">Cancel</paper-button>
+          <div class="spacer"></div>
+          <paper-button class="advance-toggle" hidden$="[[hideAdvanced]]" on-tap="_toggleSection">Advanced</paper-button>
+          <paper-button data-push="true" dialog-confirm on-tap="_dialogClosed" class="confirm-button">OK</paper-button>
+        </div>
       </div>
-      <div class="button-tray">
-        <paper-button class="cancel-button">Cancel</paper-button>
-        <div class="spacer"></div>
-        <paper-button class="advance-toggle" on-tap="_toggleSection">Advanced</paper-button>
-        <paper-button class="ok-button">OK</paper-button>
-      </div>
-    </div>
+    </paper-dialog>
+
   </template>
 
   <script>
@@ -72,15 +84,21 @@
           * color: string to store hex color value
           */
           color: {
-            type: String,
-            value: '#3f51b5'
+            type: String
           },
+          /**
+          * hideAdvanced: boolean to hide advance button
+          */
+          hideAdvanced: {
+            type: Boolean,
+            value: false
+          }
         };
       }
       _toggleSection() {
         var sections = this.shadowRoot.querySelectorAll('section');
         var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
-        
+
         for(let i = 0; i < sections.length; i++){
           if(sections[i].getAttribute('active') != null) {
             sections[i].removeAttribute('active');
@@ -93,6 +111,12 @@
         } else {
           toggleButton.innerHTML = "Advanced";
         }
+      }
+      _dialogClosed(e) {
+        this.dispatchEvent(new CustomEvent('paper-color-dialog-closed', { bubbles: true, composed: true, 'detail': (e.target.dataset.push === 'true') }));
+      }
+      open() {
+        this.shadowRoot.querySelector('paper-dialog').open();
       }
     }
 
