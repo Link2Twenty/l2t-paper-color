@@ -9,7 +9,7 @@ l2t-paper-color-picker uses `dom-repeat` and `paper-radio-group` to display an a
 ### Example:
 
     <l2t-paper-color-picker></l2t-paper-color-picker>
-    
+
 ### Styling
 The following custom properties and mixins are available for styling:
 
@@ -36,9 +36,9 @@ Custom property | Description | Default
       }
     </style>
 
-    <paper-radio-group selected="{{color}}" selectable="l2t-paper-color-radio" class="grid">
+    <paper-radio-group selected="{{color}}" attr-for-selected="color" selectable="l2t-paper-color-radio" class="grid">
       <template is="dom-repeat" items="[[colors]]">
-        <l2t-paper-color-radio name="[[item]]" color="[[item]]"></l2t-paper-color-radio>
+        <l2t-paper-color-radio color="[[item]]"></l2t-paper-color-radio>
       </template>
     </paper-radio-group>
   </template>
@@ -63,6 +63,24 @@ Custom property | Description | Default
             notify: true
           },
         };
+      }
+      /**
+      * _setDefaultColor: method to set the first item as checked is no default is present
+      */
+      _setDefaultColor() {
+        if(!this.colors.includes(this.color)){
+          this.color = this.colors[0];
+        }
+      }
+      /**
+      * ready: call _setDefaultColor when ready
+      */
+      ready() {
+        super.ready()
+        var this$ = this;
+        setTimeout(function(){
+          this$._setDefaultColor() ;
+        },0)
       }
     }
 
