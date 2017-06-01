@@ -9,22 +9,24 @@
         display: block;
       }
     </style>
+    <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
+    <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
+    [[color]]
+    
   </template>
 
   <script>
-    /**
-     * `l2t-paper-color-dialog`
-     * Dialogue box in a paper style for selecting colors
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
     class L2tPaperColorDialog extends Polymer.Element {
       static get is() { return 'l2t-paper-color-dialog'; }
       static get properties() {
         return {
-
+          /**
+          * color: string to store hex color value
+          */
+          color: {
+            type: String,
+            value: '#3f51b5'
+          },
         };
       }
     }
