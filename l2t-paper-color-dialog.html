@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="l2t-paper-color-picker.html">
 <link rel="import" href="l2t-paper-color-advanced.html">
 
@@ -8,11 +9,58 @@
       :host {
         display: block;
       }
+      .container {
+        max-width: var(--l2t-paper-color-dialog-max-width, 430px);
+        min-width: var(--l2t-paper-color-dialog-min-width, 200px);
+        width: 100%;
+      }
+      .container .section-wrapper {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        overflow: scroll;
+        max-height: var(--l2t-paper-color-dialog-max-height, 430px);
+        min-height: var(--l2t-paper-color-dialog-min-height, 200px);
+        height: 100%; 
+      }
+      .container section{
+        background-color: var(--l2t-paper-color-dialog, var(--light-theme-background-color));
+        opacity: 0;
+        pointer-events: none;
+        will-change: opacity;
+        transition: opacity 0.3s cubic-bezier(.25,.8,.25,1);
+      }
+      .container section[active] {
+        pointer-events: auto;
+        opacity: 1;
+        transition-delay: 0.15s;
+      }
+      .container section.picker {
+        position: absolute;
+      }
+      .button-tray {
+        display: flex;
+      }
+      .button-tray .spacer {
+        flex-grow: 1;
+      }
     </style>
-    <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
-    <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
-    [[color]]
-    
+    <div class="container">
+      <div class="section-wrapper">
+        <section active class="picker">
+          <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
+        </section>
+        <section class="advanced">
+          <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
+        </section>
+      </div>
+      <div class="button-tray">
+        <paper-button class="cancel-button">Cancel</paper-button>
+        <div class="spacer"></div>
+        <paper-button class="advance-toggle" on-tap="_toggleSection">Advanced</paper-button>
+        <paper-button class="ok-button">OK</paper-button>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -28,6 +76,23 @@
             value: '#3f51b5'
           },
         };
+      }
+      _toggleSection() {
+        var sections = this.shadowRoot.querySelectorAll('section');
+        var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
+        
+        for(let i = 0; i < sections.length; i++){
+          if(sections[i].getAttribute('active') != null) {
+            sections[i].removeAttribute('active');
+          } else {
+            sections[i].setAttribute('active','');
+          }
+        }
+        if(toggleButton.innerHTML == "Advanced") {
+          toggleButton.innerHTML = "Basic";
+        } else {
+          toggleButton.innerHTML = "Advanced";
+        }
       }
     }
 
