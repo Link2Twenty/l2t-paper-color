@@ -4,6 +4,29 @@
 <link rel="import" href="l2t-paper-color-picker.html">
 <link rel="import" href="l2t-paper-color-advanced.html">
 
+<!--
+l2t-paper-color-dialog uses `paper-dialog` to show l2t-paper-color-picker and l2t-paper-color-advanced
+
+### Example:
+
+    <l2t-paper-color-dialog></l2t-paper-color-dialog>
+
+### Styling
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--l2t-paper-color-dialog-background` | Background color of the dialog box | `--light-theme-background-color`
+`--l2t-paper-color-dialog-max-width` | Max width of dialog | `422px`
+`--l2t-paper-color-dialog-max-height` | Max height of dialog | `422px`
+`--l2t-paper-color-dialog-min-width` | Min width of dialog | `211px`
+`--l2t-paper-color-dialog-min-height` | Min height of dialog | `211px`
+
+@group l2t Paper Elements
+@element l2t-paper-color-dialog
+@demo demo/index.html
+-->
+
 <dom-module id="l2t-paper-color-dialog">
   <template>
     <style>
@@ -14,13 +37,13 @@
       }
       paper-dialog {
         padding: 0 12px;
-        background-color: var(--l2t-paper-color-dialog, var(--light-theme-background-color));
+        background-color: var(--l2t-paper-color-dialog-background, var(--light-theme-background-color));
       }
       .container {
-        max-width: var(--l2t-paper-color-dialog-max-width, 430px);
-        min-width: var(--l2t-paper-color-dialog-min-width, 200px);
-        max-height: var(--l2t-paper-color-dialog-max-height, 430px);
-        min-height: var(--l2t-paper-color-dialog-min-height, 200px);
+        max-width: var(--l2t-paper-color-dialog-max-width, 422px);
+        min-width: var(--l2t-paper-color-dialog-min-width, 211px);
+        max-height: var(--l2t-paper-color-dialog-max-height, 422px);
+        min-height: var(--l2t-paper-color-dialog-min-height, 211px);
         padding: 0;
         margin: 0;
       }
@@ -58,7 +81,7 @@
       <div class="container">
         <div class="section-wrapper">
           <section active class="picker">
-            <l2t-paper-color-picker color="{{color::color-changed}}"></l2t-paper-color-picker>
+            <l2t-paper-color-picker color="{{color::color-changed}}" colors="{{colors}}"></l2t-paper-color-picker>
           </section>
           <section class="advanced">
             <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
@@ -77,6 +100,11 @@
 
   <script>
     class L2tPaperColorDialog extends Polymer.Element {
+      /**
+      * Fired when the dialog box is closed.
+      *
+      * @event paper-color-dialog-closed
+      */
       static get is() { return 'l2t-paper-color-dialog'; }
       static get properties() {
         return {
@@ -87,6 +115,12 @@
             type: String
           },
           /**
+          * colors: array to store list of colors
+          */
+          colors: {
+            type: Array
+          },
+          /**
           * hideAdvanced: boolean to hide advance button
           */
           hideAdvanced: {
@@ -95,6 +129,9 @@
           }
         };
       }
+      /**
+      * _toggleSection: changes between advanced and basic state
+      */
       _toggleSection() {
         var sections = this.shadowRoot.querySelectorAll('section');
         var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
@@ -112,9 +149,15 @@
           toggleButton.innerHTML = "Advanced";
         }
       }
+      /**
+      * _dialogClosed: fires an event on dialog close, detail is true or false depending on whether the close was a confirm or not
+      */
       _dialogClosed(e) {
         this.dispatchEvent(new CustomEvent('paper-color-dialog-closed', { bubbles: true, composed: true, 'detail': (e.target.dataset.push === 'true') }));
       }
+      /**
+      * open: method to open the dialog
+      */
       open() {
         this.shadowRoot.querySelector('paper-dialog').open();
       }
