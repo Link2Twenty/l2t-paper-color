@@ -1,6 +1,6 @@
 {
   "name": "l2t-paper-color",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Dialogue box in a paper style for selecting colors",
   "main": "l2t-paper-color.html",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "iron-icons": "PolymerElements/iron-icons#^2.0.0",
     "paper-button": "PolymerElements/paper-button#^2.0.0",
-    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
