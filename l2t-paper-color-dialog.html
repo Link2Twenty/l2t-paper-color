@@ -119,7 +119,8 @@ Custom property | Description | Default
           * colors: array to store list of colors
           */
           colors: {
-            type: Array
+            type: Array,
+            notify: true
           },
           /**
           * hideAdvanced: boolean to hide advance button
@@ -163,6 +164,16 @@ Custom property | Description | Default
         }
       }
       /**
+      * _setSelection: method to choose between basic and advanced sections on open
+      */
+      _setSelection() {
+        if(this.colors.includes(this.color) || this.hideAdvanced){
+          this.setBasic();
+        } else {
+          this.setAdvanced();
+        }
+      }
+      /**
       * _dialogClosed: fires an event on dialog close, detail is true or false depending on whether the close was a confirm or not
       */
       _dialogClosed(e) {
@@ -172,10 +183,11 @@ Custom property | Description | Default
       * open: method to open the dialog
       */
       open() {
+        this._setSelection();
         this.shadowRoot.querySelector('paper-dialog').open();
       }
       /**
-      * setBasic: method to open the dialog
+      * setBasic: method to set basic section as active
       */
       setBasic() {
         this._hideSections();
@@ -185,7 +197,7 @@ Custom property | Description | Default
         toggleButton.innerHTML = "Advanced";
       }
       /**
-      * setAdvanced: method to open the dialog
+      * setAdvanced: method to set advanced section as active
       */
       setAdvanced() {
         this._hideSections();
