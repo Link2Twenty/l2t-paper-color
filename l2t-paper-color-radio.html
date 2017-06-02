@@ -168,17 +168,26 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
           type: String,
           value: 'aria-checked'
         },
+        /**
+        * color: string to store the color value
+        */
         color: {
           type: String,
           value: '#3f51b5',
           reflectToAttribute: true,
           observer: '_colorUpdate'
         },
+        /**
+        * icon: string to store iron-icon name for the check symbol
+        */
         icon: {
           type: String,
           value: 'check'
         }
       },
+      /**
+      * _colorUpdate: updates styles to match color
+      */
       _colorUpdate: function() {
         if(this._testColor()){
           this.updateStyles({
@@ -190,6 +199,9 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
           this.color = "#3f51b5";
         }
       },
+      /**
+      * _testColor: returns true if this.color is valid
+      */
       _testColor: function() {
         var testDiv = document.createElement("div");
         testDiv.style.color = this.color;
