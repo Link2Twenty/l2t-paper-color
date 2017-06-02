@@ -51,7 +51,8 @@ Custom property | Description | Default
         display: flex;
         justify-content: center;
         position: relative;
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
         height: 100%;
         width: 100%;
         padding-top: 12px;
@@ -130,6 +131,18 @@ Custom property | Description | Default
         };
       }
       /**
+      * _hideSections: hide all sections
+      */
+      _hideSections() {
+        var sections = this.shadowRoot.querySelectorAll('section');
+        var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
+
+        for(let i = 0; i < sections.length; i++){
+          sections[i].removeAttribute('active');
+        }
+        toggleButton.innerHTML = "";
+      }
+      /**
       * _toggleSection: changes between advanced and basic state
       */
       _toggleSection() {
@@ -160,6 +173,26 @@ Custom property | Description | Default
       */
       open() {
         this.shadowRoot.querySelector('paper-dialog').open();
+      }
+      /**
+      * setBasic: method to open the dialog
+      */
+      setBasic() {
+        this._hideSections();
+        var section = this.shadowRoot.querySelector('section.picker');
+        var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
+        section.setAttribute('active',"");
+        toggleButton.innerHTML = "Advanced";
+      }
+      /**
+      * setAdvanced: method to open the dialog
+      */
+      setAdvanced() {
+        this._hideSections();
+        var section = this.shadowRoot.querySelector('section.advanced');
+        var toggleButton = this.shadowRoot.querySelector('.advance-toggle');
+        section.setAttribute('active',"");
+        toggleButton.innerHTML = "Basic";
       }
     }
 
