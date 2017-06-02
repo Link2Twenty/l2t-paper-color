@@ -50,7 +50,7 @@ Custom property | Description | Default
       <iron-icon icon="image:palette" slot="suffix"></iron-icon>
     </paper-input>
     <l2t-paper-color-dialog
-      colors$="[[colors]]"
+      colors="{{colors}}"
       hide-advanced$="[[hideAdvanced]]">
     </l2t-paper-color-dialog>
 
@@ -87,6 +87,7 @@ Custom property | Description | Default
           */
           value: {
             type: String,
+            notify: true,
             observer: "_colorUpdate"
           },
           /**
@@ -122,10 +123,17 @@ Custom property | Description | Default
       * _colorUpdate: updates styles to match value
       */
       _colorUpdate() {
-        this.updateStyles({
-          '--l2t-paper-color-indicator-icon': this.value,
-          '--l2t-paper-color-indicator-icon-display': 'block',
-        });
+        if(this.value){
+          this.updateStyles({
+            '--l2t-paper-color-indicator-icon': this.value,
+            '--l2t-paper-color-indicator-icon-display': 'block',
+          });
+        } else {
+          this.updateStyles({
+            '--l2t-paper-color-indicator-icon': 'transparent',
+            '--l2t-paper-color-indicator-icon-display': 'none',
+          });
+        }
       }
       /**
       * _dialogHandler: if dialog is confirmed update value
@@ -133,22 +141,18 @@ Custom property | Description | Default
       _dialogHandler(e) {
         if(e.detail) {
           this.value = this.shadowRoot.querySelector('l2t-paper-color-dialog').color;
-        } else {
-          return
         }
       }
       /**
-      * _openDialog: open dialog and set appropriate attributes
+      * _openDialog: open dialog if not readonly
       */
       _openDialog() {
-        if(!this.readonly) {
-          var colorDialog = this.shadowRoot.querySelector('l2t-paper-color-dialog');
-          if(this.value) {
-            colorDialog.color = this.value;
-          }
-          colorDialog.setBasic();
-          colorDialog.open();
-        }
+        if(this.readonly)
+          return
+
+        var colorDialog = this.shadowRoot.querySelector('l2t-paper-color-dialog');
+        colorDialog.color=this.value||colorDialog.color;
+        colorDialog.open();
       }
       ready(){
         super.ready();
