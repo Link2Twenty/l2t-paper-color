@@ -8,12 +8,11 @@ Dialogue box for selecting colors
 First you need bower, [see their site](http://bower.io/) for details 
 
 ```
-bower install --save l2t-paper-slider
+bower install --save l2t-paper-color
 ```
 
 ## Examples
 
-Each slide must be within a paper-slide tag, but other than that you have complete control.
 <!---
 ```
 <custom-element-demo>
