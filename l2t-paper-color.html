@@ -137,6 +137,7 @@ Custom property | Description | Default
       _dialogHandler(e) {
         if(e.detail) {
           this.value = this.colorDialog.color;
+          this.dispatchEvent(new CustomEvent('change'));
         }
       }
       /**
