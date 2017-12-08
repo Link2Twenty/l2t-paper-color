@@ -1,6 +1,6 @@
 {
   "name": "l2t-paper-color",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dialogue box in a paper style for selecting colors",
   "main": "l2t-paper-color.html",
   "license": "MIT",
