@@ -49,10 +49,6 @@ Custom property | Description | Default
       <iron-icon icon="label" slot="prefix"></iron-icon>
       <iron-icon icon="image:palette" slot="suffix"></iron-icon>
     </paper-input>
-    <l2t-paper-color-dialog
-      colors="{{colors}}"
-      hide-advanced$="[[hideAdvanced]]">
-    </l2t-paper-color-dialog>
 
   </template>
 
@@ -140,7 +136,8 @@ Custom property | Description | Default
       */
       _dialogHandler(e) {
         if(e.detail) {
-          this.value = this.shadowRoot.querySelector('l2t-paper-color-dialog').color;
+          this.value = this.colorDialog.color;
+          this.dispatchEvent(new CustomEvent('change'));
         }
       }
       /**
@@ -150,13 +147,19 @@ Custom property | Description | Default
         if(this.readonly)
           return
 
-        var colorDialog = this.shadowRoot.querySelector('l2t-paper-color-dialog');
-        colorDialog.color=this.value||colorDialog.color;
-        colorDialog.open();
+        this.colorDialog.color = this.value||this.colorDialog.color;
+        this.colorDialog.open();
+      }
+      _createDialog() {
+        this.colorDialog = document.createElement('l2t-paper-color-dialog');
+        this.colorDialog.colors = this.colors;
+        this.colorDialog.hideAdvanced = this.hideAdvanced;
+        document.body.appendChild(this.colorDialog);
       }
       ready(){
         super.ready();
-        this.addEventListener("paper-color-dialog-closed", function(e){this._dialogHandler(e)}, false);
+        this._createDialog();
+        this.colorDialog.addEventListener("paper-color-dialog-closed", (e) => this._dialogHandler(e), false);
       }
     }
 
