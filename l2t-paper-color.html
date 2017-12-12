@@ -148,7 +148,7 @@ Custom property | Description | Default
           return
 
         this.colorDialog.color = this.value||this.colorDialog.color;
-        this.colorDialog.colors = this.colors;
+        this.colorDialog.colors = this.colors||this.colorDialog.colors;
         this.colorDialog.hideAdvanced = this.hideAdvanced;
         this.colorDialog.open();
       }
