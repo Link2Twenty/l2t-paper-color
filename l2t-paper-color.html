@@ -148,12 +148,12 @@ Custom property | Description | Default
           return
 
         this.colorDialog.color = this.value||this.colorDialog.color;
+        this.colorDialog.colors = this.colors||this.colorDialog.colors;
+        this.colorDialog.hideAdvanced = this.hideAdvanced;
         this.colorDialog.open();
       }
       _createDialog() {
         this.colorDialog = document.createElement('l2t-paper-color-dialog');
-        this.colorDialog.colors = this.colors;
-        this.colorDialog.hideAdvanced = this.hideAdvanced;
         document.body.appendChild(this.colorDialog);
       }
       ready(){
