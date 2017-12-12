@@ -60,5 +60,6 @@ The following custom properties are available for styling:
 | Method Name | Action |
 |----------------|-------------|
 | _colorUpdate() | Updates styles to match value |
+| _createDialog | Create dialog on first request |
 | _dialogHandler(e) | If dialog is confirmed update value |
 | _openDialog() | Open dialog if not readonly |
