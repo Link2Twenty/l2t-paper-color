@@ -132,6 +132,13 @@ Custom property | Description | Default
         }
       }
       /**
+      * _createDialog: create dialog on first request
+      */
+      _createDialog() {
+        this.colorDialog = document.createElement('l2t-paper-color-dialog');
+        document.body.appendChild(this.colorDialog);
+      }
+      /**
       * _dialogHandler: if dialog is confirmed update value
       */
       _dialogHandler(e) {
@@ -151,10 +158,6 @@ Custom property | Description | Default
         this.colorDialog.colors = this.colors||this.colorDialog.colors;
         this.colorDialog.hideAdvanced = this.hideAdvanced;
         this.colorDialog.open();
-      }
-      _createDialog() {
-        this.colorDialog = document.createElement('l2t-paper-color-dialog');
-        document.body.appendChild(this.colorDialog);
       }
       ready(){
         super.ready();
