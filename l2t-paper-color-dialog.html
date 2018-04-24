@@ -83,7 +83,7 @@ Custom property | Description | Default
           <section active class="picker">
             <l2t-paper-color-picker color="{{color::color-changed}}" colors="{{colors}}"></l2t-paper-color-picker>
           </section>
-          <section class="advanced">
+          <section hidden$="[[hideAdvanced]]" class="advanced">
             <l2t-paper-color-advanced color="{{color::color-changed}}"></l2t-paper-color-advanced>
           </section>
         </div>
