@@ -32,6 +32,9 @@ Custom property | Description | Default
         display: block;
         width: var(--l2t-paper-color-width, 120px);
       }
+      :host([hidden]) {
+        display: none;
+      }
       iron-icon[slot=prefix] {
         fill: var(--l2t-paper-color-indicator-icon, transparent);
         display: var(--l2t-paper-color-indicator-icon-display, none);;
